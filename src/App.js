@@ -1,25 +1,18 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
-
-function App() {
-  return (
+import Navbar from './components/Navbar';
+import Modal from './components/Modal';
+import TaskList from './components/TaskList'; function App() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [tasks, setTasks] = useState([]); const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  }; const addTask = (task) => {
+    setTasks([...tasks, task]);
+  }; return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar toggleModal={toggleModal} />
+      {modalOpen && <Modal toggleModal={toggleModal} addTask={addTask} />}
+      <TaskList tasks={tasks} />
     </div>
   );
-}
-
-export default App;
+} export default App;
